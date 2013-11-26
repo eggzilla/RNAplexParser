@@ -1,0 +1,29 @@
+name:                RNAplexParser
+-- The package version.  See the Haskell package versioning policy (PVP) 
+-- for standards guiding when and how versions should be incremented.
+-- http://www.haskell.org/haskellwiki/Package_versioning_policy
+-- PVP summary:      +-+------- breaking API changes
+--                   | | +----- non-breaking API additions
+--                   | | | +--- code changes with no API change
+version:             0.0.1
+synopsis:            Libary for parsing RNAz output
+description:         Parse RNAz output.
+                     
+license:             GPL
+license-file:        LICENSE
+author:              Florian Eggenhofer
+maintainer:          egg@tbi.univie.ac.at
+-- copyright:           
+category:            Bioinformatics
+build-type:          Simple
+cabal-version:       >=1.8
+library
+  -- Modules exported by the library.
+  exposed-modules:   Bio.RNAplexParser, Bio.RNAplexData 
+ 
+  -- Other library packages from which modules are imported.
+  build-depends:       base
+  
+  -- Directories containing source files.
+  hs-source-dirs:      src
+  
