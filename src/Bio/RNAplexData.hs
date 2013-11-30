@@ -3,7 +3,6 @@
 --   For more information on RNAplex consult: <http://www.bioinf.uni-leipzig.de/Software/RNAplex/>
 
 module Bio.RNAplexData where
-import qualified Data.ByteString.Char8 as S
     
 -- | RNAplex output consists of a set of interactions 
 data RNAplexOutput = RNAplexOutput
@@ -15,9 +14,9 @@ data RNAplexOutput = RNAplexOutput
 -- | Data structure for individual interaction between a target and query nucleic acid seqence
 data RNAplexInteraction = RNAplexInteraction
   { 
-    targetIdentifier :: S.ByteString,
-    queryIdentifier :: S.ByteString,
-    secondaryStructure :: S.ByteString,
+    targetIdentifier :: String,
+    queryIdentifier :: String,
+    secondaryStructure :: String,
     targetDuplexBegin :: Int,
     targetDuplexEnd :: Int,
     queryDuplexBegin :: Int,
