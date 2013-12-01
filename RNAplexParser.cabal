@@ -17,12 +17,22 @@ maintainer:          egg@tbi.univie.ac.at
 category:            Bioinformatics
 build-type:          Simple
 cabal-version:       >=1.8
+
+source-repository head
+  type:     git
+  location: https://github.com/eggzilla/RNAplexParser
+
+source-repository this
+  type:     darcs
+  location: https://github.com/eggzilla/RNAplexParser/tree/v0.0.1
+  tag:      v0.0.1
+
 library
   -- Modules exported by the library.
   exposed-modules:   Bio.RNAplexParser, Bio.RNAplexData 
  
   -- Other library packages from which modules are imported.
-  build-depends:       base
+  build-depends:       base >=4.5 && <5, parsec
   
   -- Directories containing source files.
   hs-source-dirs:      src
