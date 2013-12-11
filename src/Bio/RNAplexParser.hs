@@ -17,11 +17,6 @@ import Control.Monad
 readDouble :: String -> Double
 readDouble = read              
 
---maybeReadDouble :: Maybe String -> Maybe Double
---maybeReadDouble a = maybe read a
--- | (isjust a) = 
--- |
-
 readInt :: String -> Int
 readInt = read
 
@@ -72,3 +67,10 @@ parseRNAplexInteraction = do
   char ')'
   newline 
   return $ RNAplexInteraction targetIdentifier queryIdentifier secondaryStructure (readInt targetDuplexBegin) (readInt targetDuplexEnd) (readInt queryDuplexBegin) (readInt queryDuplexEnd) (readDouble duplexEnergy) (liftM readDouble duplexEnergyWithoutAccessiblity) (liftM readDouble queryAccessiblity) (liftM readDouble targetAccessibility)
+
+-- | parse RNAplexOutput from input string
+parseRNAplexOutput input = parse parseRNAplexOutput "parseRNAplexOutput" input
+
+-- | parse from input filePath                      
+readRNAplex :: String -> IO (Either ParseError RNAzOutput)                  
+readRNAplex filePath = parseFromFile parseRNAplexOutput filePath
