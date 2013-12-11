@@ -23,7 +23,7 @@ source-repository head
   location: https://github.com/eggzilla/RNAplexParser
 
 source-repository this
-  type:     darcs
+  type:     git
   location: https://github.com/eggzilla/RNAplexParser/tree/v0.0.1
   tag:      v0.0.1
 
