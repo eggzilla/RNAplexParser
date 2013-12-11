@@ -2,8 +2,8 @@
 --   For more information on RNAplex consult: <http://www.bioinf.uni-leipzig.de/Software/RNAplex/>
 
 module Bio.RNAplexParser (
-                       parseRNAplexOutput,
---                       readRNAplexOutput,                                   
+                       parseRNAplex,
+                       readRNAplex,                                   
                        module Bio.RNAplexData
                       ) where
 
@@ -69,7 +69,7 @@ parseRNAplexInteraction = do
   return $ RNAplexInteraction targetIdentifier queryIdentifier secondaryStructure (readInt targetDuplexBegin) (readInt targetDuplexEnd) (readInt queryDuplexBegin) (readInt queryDuplexEnd) (readDouble duplexEnergy) (liftM readDouble duplexEnergyWithoutAccessiblity) (liftM readDouble queryAccessiblity) (liftM readDouble targetAccessibility)
 
 -- | parse RNAplexOutput from input string
-parseRNAplexOutput input = parse parseRNAplexOutput "parseRNAplexOutput" input
+parseRNAplex input = parse parseRNAplexOutput "parseRNAplexOutput" input
 
 -- | parse from input filePath                      
 readRNAplex :: String -> IO (Either ParseError RNAzOutput)                  
