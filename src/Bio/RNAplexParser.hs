@@ -2,8 +2,8 @@
 --   For more information on RNAplex consult: <http://www.bioinf.uni-leipzig.de/Software/RNAplex/>
 
 module Bio.RNAplexParser (
-                       parseRNAplex,
-                       readRNAplex,                                   
+                       parseRNAplexOutput,
+--                       readRNAplexOutput,                                   
                        module Bio.RNAplexData
                       ) where
 
@@ -12,13 +12,25 @@ import Text.ParserCombinators.Parsec
 import Text.ParserCombinators.Parsec.Token
 import Text.ParserCombinators.Parsec.Language (emptyDef)    
 import Control.Monad
+--import Control.Applicative
+
+readDouble :: String -> Double
+readDouble = read              
+
+--maybeReadDouble :: Maybe String -> Maybe Double
+--maybeReadDouble a = maybe read a
+-- | (isjust a) = 
+-- |
+
+readInt :: String -> Int
+readInt = read
 
 -- | Parse the input as RNAzOutput datatype
-parseRNAzOutput :: GenParser Char st RNAplexOutput
-parseRNAzOutput = do
-  rnaplexResults <- many1 (try parseRNAplexResult)   
+parseRNAplexOutput :: GenParser Char st RNAplexOutput
+parseRNAplexOutput = do
+  rnaPlexInteractions <- many1 (try parseRNAplexInteraction)   
   eof  
-  return $ RNAplexOutput rnaplexResults
+  return $ RNAplexOutput rnaPlexInteractions
 
 -- | Parse the consenus of RNAz results         
 parseRNAplexInteraction :: GenParser Char st RNAplexInteraction
@@ -30,33 +42,33 @@ parseRNAplexInteraction = do
   string (">") 
   queryIdentifier <- many1 (noneOf "\n")                
   newline 
-  dotBracket <- many1 (oneOf "().,")
+  secondaryStructure <- many1 (oneOf "().,")
   space
-  targetDuplexBegin <- many1 integer
+  targetDuplexBegin <- many1 digit
   char ','
-  targetDuplexEnd <- many1 integer
+  targetDuplexEnd <- many1 digit
   space
   char ':'
   space
   many1 space
-  queryDuplexBegin <- many1 integer
+  queryDuplexBegin <- many1 digit
   char ','
-  queryDuplexEnd <- many1 integer
+  queryDuplexEnd <- many1 digit
   many1 space
   char '('
-  duplexEnergy <- float
-  space
-  char '='
-  space
-  duplexEnergyWithoutAccessiblity <- float
-  space 
-  char '+'
-  many1 space
-  queryAccessiblity <- float
-  space 
-  char '+'
-  many1 space
-  targetAccessibility <- float
+  duplexEnergy <- many1 (noneOf (" )"))
+  optional space
+  optional (char '=')
+  optional space
+  duplexEnergyWithoutAccessiblity <- optionMaybe (many1 (noneOf (" ")))
+  optional space 
+  optional (char '+')
+  optional (many1 space)
+  queryAccessiblity <- optionMaybe (many1 (noneOf (" "))) 
+  optional space 
+  optional (char '+')
+  optional (many1 space)
+  targetAccessibility <- optionMaybe (many1 (noneOf (")"))) 
   char ')'
   newline 
-  return $ RNAzConsensus consensusSequence dotBracket
+  return $ RNAplexInteraction targetIdentifier queryIdentifier secondaryStructure (readInt targetDuplexBegin) (readInt targetDuplexEnd) (readInt queryDuplexBegin) (readInt queryDuplexEnd) (readDouble duplexEnergy) (liftM readDouble duplexEnergyWithoutAccessiblity) (liftM readDouble queryAccessiblity) (liftM readDouble targetAccessibility)

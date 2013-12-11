@@ -7,7 +7,7 @@ module Bio.RNAplexData where
 -- | RNAplex output consists of a set of interactions 
 data RNAplexOutput = RNAplexOutput
   {
-    RNAplexOutput :: [RNAplexInteraction]
+    plexInteractions :: [RNAplexInteraction]
   }
   deriving (Show, Eq)
 
@@ -22,8 +22,8 @@ data RNAplexInteraction = RNAplexInteraction
     queryDuplexBegin :: Int,
     queryDuplexEnd :: Int,
     duplexEnergy :: Double,
-    duplexEnergyWithoutAccessiblity :: Double,
+    duplexEnergyWithoutAccessiblity :: Maybe Double,
     queryAccessiblity :: Maybe Double,
-    targetAccessibility :: Maybe Double,
+    targetAccessibility :: Maybe Double
   }
   deriving (Show, Eq)
