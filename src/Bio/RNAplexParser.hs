@@ -72,5 +72,5 @@ parseRNAplexInteraction = do
 parseRNAplex input = parse parseRNAplexOutput "parseRNAplexOutput" input
 
 -- | parse from input filePath                      
-readRNAplex :: String -> IO (Either ParseError RNAzOutput)                  
+readRNAplex :: String -> IO (Either ParseError RNAplexOutput)                  
 readRNAplex filePath = parseFromFile parseRNAplexOutput filePath
