@@ -30,19 +30,18 @@ parseRNAplexOutput = do
 -- | Parse the consenus of RNAz results         
 parseRNAplexInteraction :: GenParser Char st RNAplexInteraction
 parseRNAplexInteraction = do
-  space
   string (">") 
   targetIdentifier <- many1 (noneOf "\n")                
   newline
   string (">") 
   queryIdentifier <- many1 (noneOf "\n")                
   newline 
-  secondaryStructure <- many1 (oneOf "().,")
-  space
+  secondaryStructure <- many1 (oneOf "&().,")
+  many1 space
   targetDuplexBegin <- many1 digit
   char ','
   targetDuplexEnd <- many1 digit
-  space
+  many1 space
   char ':'
   space
   many1 space
